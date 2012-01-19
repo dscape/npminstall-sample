@@ -27,28 +27,27 @@ npmstream.on('value'     , function (value) {
 });
 
 npmstream.on('end', function () {
-  var exported         = dict['export']()
+  var export_json      = dict['export']()
+    , exported         = export_json.corpus
     , npm_alphabet_map = {}
-    , npm_alphabet     = []
+    , npm_alphabet     = ''
     ;
-  for(var k in exported.corpus) {
+  for(var k in exported) {
     var i          = 0
-      , c          = k.charAt[0]
+      , c          = k.charAt(0)
       ;
-
     // collect all letters
     while(c) {
-      console.log(c)
       npm_alphabet_map[c] = 0;
       c = k.charAt(i++);
     }
   }
   for(var k in npm_alphabet_map) {
-    npm_alphabet.push(k);
+    npm_alphabet += k;
   }
   fs.writeFileSync(__dirname + '/dict.json', 
-    JSON.stringify(exported, null, 2));
-  fs.writeFileSync(__dirname + '/alpha.json',
+    JSON.stringify(export_json, null, 2));
+  fs.writeFileSync(__dirname + '/alphabet.txt',
     JSON.stringify(npm_alphabet));
   console.log('done');
 });
